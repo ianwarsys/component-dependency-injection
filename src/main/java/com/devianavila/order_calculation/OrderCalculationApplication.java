@@ -7,33 +7,27 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Scanner;
-
 
 @SpringBootApplication
 public class OrderCalculationApplication implements CommandLineRunner {
 
-	@Autowired
-	OrderService orderService;
+    @Autowired
+    OrderService orderService;
 
-	public static void main(String[] args) {
-		SpringApplication.run(OrderCalculationApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OrderCalculationApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		try(Scanner sc = new Scanner(System.in)) {
-			double basic, discount;
-			int code;
-			code = sc.nextInt();
-			basic = sc.nextDouble();
-			discount = sc.nextDouble();
+    @Override
+    public void run(String... args) throws Exception {
 
-			Order order = new Order(code, basic, discount);
+        Order order1 = new Order(1034, 150.00, 20.0);
+        Order order2 = new Order(2282, 800.00, 10.0);
+        Order order3 = new Order(1309, 95.90, 0.0);
 
-			double total = orderService.total(order);
+        System.out.printf("Pedido código %d \nValor total: R$ %.2f\n", order1.getCode(), orderService.total(order1));
+        System.out.printf("\nPedido código %d \nValor total: R$ %.2f\n", order2.getCode(), orderService.total(order2));
+        System.out.printf("\nPedido código %d \nValor total: R$ %.2f\n", order3.getCode(), orderService.total(order3));
 
-			System.out.printf("Pedido código %d \nValor total: R$ %.2f", order.getCode(), total);
-		}
-	}
+    }
 }
